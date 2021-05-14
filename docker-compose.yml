@@ -1,0 +1,13 @@
+version: '3'
+services:
+    tsung:
+        image: prima/tsung
+        volumes:
+            - ./tsung/tsung-docker.xml:/root/.tsung/tsung.xml
+            - ./log/:/root/.tsung/log
+            - ./tsung/tsung-1.0.dtd:/usr/share/tsung/tsung-1.0.dtd
+        ports:
+            - 8091:8091
+        command: -k start
+    app:
+        build: .

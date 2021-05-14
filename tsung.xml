@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tsung SYSTEM
+    "/usr/local/Cellar/tsung/1.7.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="warning">
+    <clients>
+        <client host="localhost" maxusers="10000" use_controller_vm="true" />
+    </clients>
+    <servers>
+        <server host="localhost" port="3000" type="tcp" />
+    </servers>
+    <load>
+        <arrivalphase phase="1" duration="1" unit="minute">
+            <users arrivalrate="1" unit="second" />
+        </arrivalphase>
+    </load>
+    <sessions>
+        <session name="es_load" weight="1" type="ts_http">
+            <request>
+                <dyn_variable name="count" jsonpath="count" />
+                <dyn_variable name="id" jsonpath="nested.id" />
+                <http url="/" method="GET" />
+            </request>
+
+            <thinktime value="3" random="true" />
+
+            <setdynvars sourcetype="random_string" length="13">
+                <var name="rnd" />
+            </setdynvars>
+            <request subst="true">
+                <http
+                    url="/"
+                    method="POST"
+                    content_type="application/json"
+                    contents="{
+                        &quot;count&quot;: &quot;%%_count%%&quot;,
+                        &quot;id&quot;: &quot;%%_id%%&quot;
+                    }"
+                >
+                    <http_header name="Authorization" value="Bearer %%_rnd%%" />
+                </http>
+            </request>
+        </session>
+    </sessions>
+</tsung>

@@ -1,0 +1,5 @@
+{
+    "hello": "world",
+    "dynamic1": "%%_id%%",
+    "dynamic2": "%%_rnd%%"
+}

@@ -11,9 +11,11 @@ const wss = new WebSocket.Server({ server })
 app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
+
 const get = () => {
     let count = 0
     return (req, res) => {
+        console.log(req.query.a)
         const id = Math.floor(Math.random() * 100)
         console.log({ count, id })
         res.json({ count, nested: { id } })
@@ -25,7 +27,6 @@ app.get('/', get())
 const post = () => {
     let count = 0
     return ({ body, headers }, res) => {
-        // console.log({ headers })
         console.log({ count, body, auth: headers.authorization })
         res.send({ count })
         count++

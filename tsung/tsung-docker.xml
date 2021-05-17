@@ -17,7 +17,7 @@
             <request>
                 <dyn_variable name="count" jsonpath="count" />
                 <dyn_variable name="id" jsonpath="nested.id" />
-                <http url="/" method="GET" />
+                <http url="/?a=1" method="GET" />
             </request>
 
             <thinktime value="1" random="true" />
@@ -34,6 +34,19 @@
                         &quot;count&quot;: &quot;%%_count%%&quot;,
                         &quot;id&quot;: &quot;%%_id%%&quot;
                     }"
+                >
+                    <http_header name="Authorization" value="Bearer %%_rnd%%" />
+                </http>
+            </request>
+
+            <thinktime value="1" random="true" />
+
+            <request subst="true">
+                <http
+                    url="/"
+                    method="POST"
+                    content_type="application/json"
+                    contents_from_file="/tmp/payload/post.json"
                 >
                     <http_header name="Authorization" value="Bearer %%_rnd%%" />
                 </http>

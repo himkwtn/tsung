@@ -6,6 +6,7 @@ services:
             - ./tsung/tsung-docker.xml:/root/.tsung/tsung.xml
             - ./log/:/root/.tsung/log
             - ./tsung/tsung-1.0.dtd:/usr/share/tsung/tsung-1.0.dtd
+            - ./tsung/payload:/tmp/payload
         ports:
             - 8091:8091
         command: -k start
